@@ -1,1 +1,1 @@
-[Linkki sovellukseem](https://pure-badlands-32804.herokuapp.com/)
+[Linkki sovellukseen](https://pure-badlands-32804.herokuapp.com/)
