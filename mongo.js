@@ -18,17 +18,17 @@ const person = new Person({
 if (person.name && person.number){
   person
     .save()
-    .then(response => {
+    .then(() => {
       console.log(`lisätään henkilö ${person.name} numero ${person.number} luetteloon`)
       mongoose.connection.close()
     })
-  } else {
-    Person  
-      .find({})
-      .then(result => {
-        result.forEach(person => {
-          console.log(person.name, person.number)
-        })
-        mongoose.connection.close()
+} else {
+  Person
+    .find({})
+    .then(result => {
+      result.forEach(person => {
+        console.log(person.name, person.number)
       })
-  }
+      mongoose.connection.close()
+    })
+}

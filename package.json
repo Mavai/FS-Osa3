@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "watch": "node_modules/.bin/nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node_modules/.bin/eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "nick-generator": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^4.17.0",
     "nodemon": "^1.14.11"
   }
 }

@@ -7,7 +7,7 @@ const Person = require('./models/person')
 
 app.use(bodyParser.json())
 
-morgan.token('type', function (req, res) { return JSON.stringify(req.body) })
+morgan.token('type', function (req) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :type :status :res[content-length] - :response-time ms'))
 
 app.use(cors())
@@ -18,7 +18,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-  let count = 0
   Person
     .count({})
     .then(count => {
@@ -35,13 +34,12 @@ app.get('/info', (req, res) => {
 
 app.get('/api/persons', (req, res) => {
   Person
-    .find({}, {__v:0})
+    .find({}, { __v:0 })
     .then(persons => res.json(persons.map(Person.format)))
     .catch(error => console.log(error))
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
   Person
     .findById(req.params.id)
     .then(Person.format)
@@ -56,8 +54,8 @@ app.delete('/api/persons/:id', (req, res) => {
       person ? res.status(204).end() : res.status(404).send({ error: 'person has been removed already' })
     })
     .catch(error => {
-      console.log(error);
-      res.status(400).send({ error: 'malformed id' })
+      console.log(error)
+      res.status(400).send({ error: 'malformed id' })
     })
 })
 
@@ -76,7 +74,7 @@ app.post('/api/persons', (req, res) => {
           name: body.name,
           number: body.number
         })
-      
+
         person
           .save()
           .then(Person.format)
@@ -85,7 +83,6 @@ app.post('/api/persons', (req, res) => {
       }
     })
 })
-      
 
 app.put('/api/persons/:id', (req, res) => {
   const body = req.body
@@ -96,16 +93,13 @@ app.put('/api/persons/:id', (req, res) => {
   }
 
   Person
-    .findByIdAndUpdate(req.params.id, person, {new: true})
+    .findByIdAndUpdate(req.params.id, person, { new: true })
     .then(updatedNote => res.json(Person.format(updatedNote)))
     .catch(error => {
       console.log(error)
-      res.status(400).send({ error: 'malformed id' })
+      res.status(400).send({ error: 'malformed id' })
     })
 })
-
-
-const generatedId = (max) => Math.floor(Math.random() * max)
 
 
 const PORT = process.env.PORT || 3001
